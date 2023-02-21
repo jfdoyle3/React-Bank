@@ -1,24 +1,41 @@
-import React,{ useState } from 'react';
+import React from 'react';
+import Button from '../common/Button';
+import Form from '../common/Form';
+import InlineInputContainer from '../common/InlineInputContainer';
+import Input from '../common/Input';
 
+const CheckingAccount = (props) => {
+  const {query, updateForm, onSubmit} = props;
 
-
-const CheckingAccount =() => {
-  const [values, setValues] = useState({
-    name: '',
-  });
-  const set = name => {
-    return ({ target: { value } }) => {
-      setValues(oldValues => ({...oldValues, [name]: value }));
-    }
-  };
-  return (
-    <form>
-      <h2>Checking</h2>
-      <label>Name*:</label>
-      <input value={values.name} onChange={set('name')} />
-     
-      <button type="submit">Submit</button>
-    </form>
-  );
+  const handleChange = (e) => {
+    updateForm(e.target.id, e.target.value);
   }
-  export default CheckingAccount;
+
+  const handleSubmit = (e) => {
+    onSubmit(e);
+  }
+
+  return (
+    <Form
+      onSubmit={handleSubmit}
+      style={{
+        maxWidth: "800px",
+        width: "100%",
+      }}
+    >
+      <InlineInputContainer>
+        <Input
+          id="name"
+          placeholder="Tracker name"
+          onChange={handleChange}
+          value={query.name}
+        />
+      </InlineInputContainer>
+     
+      <Button>Submit</Button>
+    </Form>
+  )
+
+}
+
+export default CheckingAccount;
